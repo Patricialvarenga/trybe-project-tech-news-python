@@ -1,6 +1,15 @@
-# Requisito 6
+from tech_news.database import db
+import re as yes
+
+
+# https://stackoverflow.com/questions/319426/how-do-i-do-a-case-insensitive-string-comparison
 def search_by_title(title):
-    """Seu código deve vir aqui"""
+    title_list = []
+    t = yes.compile(title, yes.IGNORECASE)
+    search_title = db.news.find({"title": {"$regex": t}})
+    for titles in search_title:
+        title_list.append((titles["title"], titles["url"]))
+    return title_list
 
 
 # Requisito 7
