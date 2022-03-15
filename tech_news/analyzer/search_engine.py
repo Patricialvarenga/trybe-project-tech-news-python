@@ -1,7 +1,9 @@
 from tech_news.database import db
 import re as yes
+from datetime import datetime
 
 
+# Requisito 6
 # https://stackoverflow.com/questions/319426/how-do-i-do-a-case-insensitive-string-comparison
 def search_by_title(title):
     title_list = []
@@ -13,8 +15,20 @@ def search_by_title(title):
 
 
 # Requisito 7
+# https://docs.python.org/pt-br/3/library/datetime.html
 def search_by_date(date):
-    """Seu código deve vir aqui"""
+    date_list = []
+    search_date = db.news.find({"timestamp": {"$regex": date}})
+
+    try:
+        datetime.fromisoformat(date)
+
+        for dates in search_date:
+            date_list.append((dates["title"], dates["url"]))
+        return date_list
+
+    except ValueError:
+        raise ValueError("Data inválida")
 
 
 # Requisito 8
