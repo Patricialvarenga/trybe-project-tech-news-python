@@ -32,8 +32,14 @@ def search_by_date(date):
 
 
 # Requisito 8
+# https://stackoverflow.com/questions/319426/how-do-i-do-a-case-insensitive-string-comparison
 def search_by_source(source):
-    """Seu código deve vir aqui"""
+    source_list = []
+    s = yes.compile(source, yes.IGNORECASE)
+    search_source = db.news.find({"sources": {"$regex": s}})
+    for sources in search_source:
+        source_list.append((sources["title"], sources["url"]))
+    return source_list
 
 
 # Requisito 9
