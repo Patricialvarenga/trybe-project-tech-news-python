@@ -43,5 +43,11 @@ def search_by_source(source):
 
 
 # Requisito 9
+# https://stackoverflow.com/questions/319426/how-do-i-do-a-case-insensitive-string-comparison
 def search_by_category(category):
-    """Seu código deve vir aqui"""
+    category_list = []
+    c = yes.compile(category, yes.IGNORECASE)
+    search_category = db.news.find({"categories": {"$regex": c}})
+    for categories in search_category:
+        category_list.append((categories["title"], categories["url"]))
+    return category_list
